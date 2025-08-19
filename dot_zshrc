@@ -9,6 +9,7 @@ source $ZSH/oh-my-zsh.sh
 
 ZSH_CUSTOM=$HOME/.oh-my-zsh/custom
 
+# add SSH label to prompt if in SSH session
 if [ -n "$SSH_CONNECTION" ]; then
   export PS1="%F{red}[SSH: %m]%f $PS1"
 fi
