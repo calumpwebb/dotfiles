@@ -19,6 +19,8 @@ prompt_git_dirty_marker() {
 }
 
 # optional SSH label when in an SSH session
+[[ -n $SSH_CONNECTION ]] && SSH_SEG='%F{160}[SSH: %n@%m]%f '
+
 # %m shows the host. uses parameter expansion so it is dynamic
 PROMPT='${SSH_CONNECTION:+%F{160}[SSH: %m]%f }%F{45}%c%f $(git_prompt_info)$(prompt_git_dirty_marker) '
 
