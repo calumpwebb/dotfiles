@@ -15,12 +15,19 @@ ZSH_THEME_GIT_PROMPT_CLEAN=''
 # print a dirty marker AFTER the git info
 prompt_git_dirty_marker() {
   git rev-parse --is-inside-work-tree >/dev/null 2>&1 || return
-  [[ -n "$(git status --porcelain 2>/dev/null)" ]] && print -n ' %F{178}✗%f'
+  print -n ' '                   # always one space
+  [[ -n "$(git status --porcelain 2>/dev/null)" ]] && print -n '%F{178}✗%f '
 }
 
-# optional SSH label when in an SSH session
-[[ -n $SSH_CONNECTION ]] && SSH_SEG='%F{160}[SSH: %n@%m]%f '
+# recompute SSH segment dynamically each prompt
+precmd() {
+  if [[ -n "$SSH_CONNECTION$SSH_CLIENT$SSH_TTY" ]]; then
+    SSH_SEG='%F{160}[%n@%m]%f '
+  else
+    SSH_SEG=''
+  fi
+}
 
-# %m shows the host. uses parameter expansion so it is dynamic
-PROMPT='${SSH_CONNECTION:+%F{160}[SSH: %m]%f }%F{45}%c%f $(git_prompt_info)$(prompt_git_dirty_marker) '
+# main prompt
+PROMPT='${SSH_SEG}%F{45}%c%f $(git_prompt_info)$(prompt_git_dirty_marker)'
 
