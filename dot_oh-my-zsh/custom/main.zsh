@@ -19,7 +19,7 @@ brew() {
     command brew "$@"
     # then update your Brewfile with the new package
     command brew bundle dump --file="$HOMEBREW_BUNDLE_FILE_GLOBAL" --force --describe --all
-    echo "Updated Brewfile=$BREWFILE"
+    echo "Updated Brewfile=$HOMEBREW_BUNDLE_FILE_GLOBAL"
   else
     command brew "$@"
   fi
