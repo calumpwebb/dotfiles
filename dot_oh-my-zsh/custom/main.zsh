@@ -1,11 +1,12 @@
 # import all autocompletes
-for file in $(ls -1 ./autocompletes/*.zsh); do
-    echo "loading $file"
-    source $file
+for file in $ZSH_CUSTOM/autocompletes/*.zsh(.N); do
+  echo "loading $file"
+  source "$file"
 done
 
 # import all aliases
-for file in $(ls -1 ./aliases/*.zsh); do
-    echo "loading $file"
-    source $file
+for file in $ZSH_CUSTOM/aliases/*.zsh(.N); do
+  echo "loading $file"
+  source "$file"
 done
+
