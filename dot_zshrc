@@ -1,4 +1,5 @@
 # Path to your Oh My Zsh installation.
+
 export ZSH="$HOME/.oh-my-zsh"
 
 plugins=(git)
@@ -9,21 +10,25 @@ ZSH_CUSTOM=$HOME/.oh-my-zsh/custom
 
 ## PROMPT
 
-autoload -U colors; colors   # load zsh color definitions
-setopt PROMPT_SUBST          # allow variables/commands inside PROMPT
+autoload -U colors; colors
+setopt PROMPT_SUBST
 
-# right side: show time in gray
-RPROMPT='%F{242}%*%f'
+RPROMPT='%F{242}%*%f'  # time on the right in gray
 
-# git prompt coloring
+# git prompt coloring (paren wraps only the branch)
 ZSH_THEME_GIT_PROMPT_PREFIX='%F{69}git:(%F{141}'
 ZSH_THEME_GIT_PROMPT_SUFFIX='%F{69})%f'
-ZSH_THEME_GIT_PROMPT_DIRTY='%F{69}) %F{178}✗%f'
-ZSH_THEME_GIT_PROMPT_CLEAN='%F{69})%f'
+ZSH_THEME_GIT_PROMPT_DIRTY=''   # empty so the star is not injected inside ()
+ZSH_THEME_GIT_PROMPT_CLEAN=''
+
+# print a dirty marker AFTER the git info
+prompt_git_dirty_marker() {
+  git rev-parse --is-inside-work-tree >/dev/null 2>&1 || return
+  [[ -n "$(git status --porcelain 2>/dev/null)" ]] && print -n ' %F{178}✗%f'
+}
 
 # optional SSH label
 [[ -n $SSH_CONNECTION ]] && SSH_SEG='%F{160}[SSH: %m]%f '
 
-# prompt: SSH tag (if any), current dir (just basename), git info
-PROMPT='${SSH_SEG}%F{45}%c%f $(git_prompt_info) '
-
+# prompt: SSH tag (if any), cwd, git info, then dirty marker outside
+PROMPT='${SSH_SEG}%F{45}%c%f $(git_prompt_info)$(prompt_git_dirty_marker) '
