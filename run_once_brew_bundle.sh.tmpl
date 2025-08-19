@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# point brew to your global Brewfile if you use one
+export HOMEBREW_BUNDLE_FILE_GLOBAL="${HOMEBREW_BUNDLE_FILE_GLOBAL:-$HOME/.Brewfile}"
+
+if command -v brew >/dev/null 2>&1; then
+  brew update
+  brew bundle || true # do not fail the whole apply if one item flakes
+fi
+
