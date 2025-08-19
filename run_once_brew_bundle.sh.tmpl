@@ -6,6 +6,6 @@ export HOMEBREW_BUNDLE_FILE_GLOBAL="${HOMEBREW_BUNDLE_FILE_GLOBAL:-$HOME/.Brewfi
 
 if command -v brew >/dev/null 2>&1; then
   brew update
-  brew bundle || true # do not fail the whole apply if one item flakes
+  brew bundle --file="$HOMEBREW_BUNDLE_FILE_GLOBAL" || true # do not fail the whole apply if one item flakes
 fi
 
