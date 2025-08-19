@@ -14,6 +14,14 @@ Other notable apps that I use:
 - 1Password
 - Tailscale
 
+# Setup new computer
+
+```bash
+# run the bootstrap.sh (requires brew)
+sh -c "$(curl -fsLS https://raw.githubusercontent.com/calumpwebb/dotfiles/main/bootstrap.sh)"
+```
+
+
 # TODOs
 
 - Setup 1Password cli (op)?
@@ -28,3 +36,5 @@ Other notable apps that I use:
 - Stop tracking DS_Store?
 - TODO: install alfred and document here?
 - TODO: tailscale setup/config here?
+- TODO: create 
+
