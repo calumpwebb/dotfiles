@@ -28,6 +28,7 @@ precmd() {
   fi
 }
 
+
 # main prompt
 PROMPT='${SSH_SEG}%F{45}%c%f $(git_prompt_info)$(prompt_git_dirty_marker)'
 
