@@ -10,13 +10,15 @@ done
 
 # wrap brew so that it auto updates the $HOME/Brewfile
 # when we install new packages
-BREWFILE=$HOME/.brewfile
+
+export HOMEBREW_BUNDLE_FILE_GLOBAL="$HOME/.Brewfile"
+
 brew() {
   if [[ "$1" == "install" ]]; then
     # run the real brew first
     command brew "$@"
     # then update your Brewfile with the new package
-    command brew bundle dump --file="$BREWFILE" --force --describe --all
+command brew bundle dump --file="$HOMEBREW_BUNDLE_FILE_GLOBAL" --force --describe --all
     echo "Updated Brewfile=$BREWFILE"
   else
     command brew "$@"
