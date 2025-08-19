@@ -2,3 +2,5 @@
 brew "chezmoi"
 # Go version management
 brew "goenv"
+# Ambitious Vim-fork focused on extensibility and agility
+brew "neovim"
