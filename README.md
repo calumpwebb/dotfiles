@@ -21,6 +21,7 @@ Other notable apps that I use:
 sh -c "$(curl -fsLS https://raw.githubusercontent.com/calumpwebb/dotfiles/main/bootstrap.sh)"
 ```
 
+NOTE: haven't tracked /etc/ssh/sshd_config yet... to do later
 
 # TODOs
 
