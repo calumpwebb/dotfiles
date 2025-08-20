@@ -1,0 +1,12 @@
+#!/bin/sh
+# chezmoi onchange hook: restart sshd on macOS when sshd_config changes
+
+# Validate config first
+if ! /usr/sbin/sshd -t; then
+  echo "Invalid sshd_config, NOT restarting sshd"
+  exit 1
+fi
+
+# Restart sshd via launchctl (macOS)
+echo "Restarting sshd via launchctl..."
+launchctl kickstart -k system/com.openssh.sshd
