@@ -22,4 +22,3 @@ brew() {
     command brew "$@"
   fi
 }
-

@@ -1,0 +1,20 @@
+# Authentication
+PasswordAuthentication no
+PubkeyAuthentication yes
+PermitEmptyPasswords no
+ChallengeResponseAuthentication no
+
+# Root login
+PermitRootLogin no 
+
+# Timeouts
+LoginGraceTime 30 # 30 seconds 
+MaxAuthTries 3
+
+# PAM and environment
+UsePAM yes
+PermitUserEnvironment no
+
+# SFTP
+Subsystem sftp /usr/lib/openssh/sftp-server
+
