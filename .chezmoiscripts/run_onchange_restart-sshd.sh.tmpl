@@ -1,10 +1,30 @@
 #!/bin/sh
-# chezmoi onchange hook: restart sshd on macOS when sshd_config changes
+set -eu
 
-if /usr/sbin/sshd -t -f /etc/ssh/sshd_config; then
-  echo "Valid sshd_config, restarting sshd"
-  sudo launchctl kickstart -k system/com.openssh.sshd
-else
-  echo "Invalid sshd_config, NOT restarting sshd"
+echo ">>> chezmoi: running restart-sshd hook" >&2
+
+CONFIG="/etc/ssh/sshd_config"
+
+# Test config
+if ! /usr/sbin/sshd -t -f "$CONFIG" 2> /tmp/sshd_config_test.log; then
+  echo ">>> sshd config test failed. See /tmp/sshd_config_test.log" >&2
+  cat /tmp/sshd_config_test.log >&2
+  exit 1
 fi
 
+# Double-check hostkeys exist
+if ! ls /etc/ssh/ssh_host_* >/dev/null 2>&1; then
+  echo ">>> No host keys found, not restarting sshd" >&2
+  exit 1
+fi
+
+# Restart sshd (macOS LaunchDaemon)
+echo ">>> Restarting sshd via launchctl" >&2
+if launchctl list | grep -q com.openssh.sshd; then
+  sudo launchctl unload /System/Library/LaunchDaemons/ssh.plist || true
+  sudo launchctl load   /System/Library/LaunchDaemons/ssh.plist
+else
+  sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist
+fi
+
+echo ">>> sshd restart complete" >&2
