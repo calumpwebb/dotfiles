@@ -10,3 +10,7 @@ source $ZSH/oh-my-zsh.sh
 
 ZSH_CUSTOM=$HOME/.oh-my-zsh/custom
 
+# Goenv
+export PATH="$HOME/.goenv/bin:$PATH"
+eval "$(goenv init -)"
+
